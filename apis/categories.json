@@ -1,0 +1,10 @@
+[
+  { "id": 1, "label": "아우터", "emoji": "🧥" },
+  { "id": 2, "label": "상의", "emoji": "👕" },
+  { "id": 3, "label": "하의", "emoji": "👖" },
+  { "id": 4, "label": "원피스", "emoji": "👗" },
+  { "id": 5, "label": "신발", "emoji": "👟" },
+  { "id": 6, "label": "가방", "emoji": "👜" },
+  { "id": 7, "label": "액세서리", "emoji": "⌚" },
+  { "id": 8, "label": "모자", "emoji": "🧢" }
+]
