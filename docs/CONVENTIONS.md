@@ -4,7 +4,6 @@
 
 ```
 fitory/
-├── apis/                  # 정적 JSON 데이터 (→ 추후 Supabase로 대체)
 ├── app/
 │   ├── components/        # 모든 컴포넌트 (flat, 서브폴더 없음)
 │   ├── layout.js
