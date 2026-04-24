@@ -49,6 +49,7 @@ export default function Header() {
               <span className="absolute -top-1.5 -right-1.5 bg-red-500 text-white text-[10px] font-bold rounded-full w-4 h-4 flex items-center justify-center">2</span>
             </button>
             <button className="hidden md:block text-sm font-medium hover:text-gray-300">로그인</button>
+            <a href="/mypage" className="hidden md:block text-sm font-medium hover:text-gray-300">마이페이지</a>
           </div>
         </div>
 
