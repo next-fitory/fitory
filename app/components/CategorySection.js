@@ -1,7 +1,9 @@
-import categories from '@/apis/categories.json'
+import { getCategories } from '@/lib/data/categories'
 import CategoryItem from './CategoryItem'
 
-export default function CategorySection() {
+export default async function CategorySection() {
+  const categories = await getCategories()
+
   return (
     <section className="border-b border-gray-100">
       <div className="max-w-7xl mx-auto px-4 py-6">

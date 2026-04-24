@@ -6,7 +6,7 @@ export default function ProductCard({ product, rank }) {
     <div className="group cursor-pointer">
       <div className="relative overflow-hidden bg-gray-100 aspect-[3/4]">
         <Image
-          src={`https://picsum.photos/seed/${product.seed}/400/533`}
+          src={product.image_url}
           alt={product.name}
           fill
           sizes="(max-width: 768px) 50vw, 25vw"
@@ -27,9 +27,9 @@ export default function ProductCard({ product, rank }) {
         </button>
       </div>
       <div className="mt-2 space-y-0.5">
-        <p className="text-xs text-gray-500 font-medium">{product.brand}</p>
+        <p className="text-xs text-gray-500 font-medium">{product.brands?.name}</p>
         <p className="text-sm font-medium text-black leading-snug line-clamp-1">{product.name}</p>
-        <PriceLabel price={product.price} salePrice={product.salePrice} rate={product.rate} />
+        <PriceLabel price={product.price} salePrice={product.sale_price} rate={product.discount_rate} />
       </div>
     </div>
   )

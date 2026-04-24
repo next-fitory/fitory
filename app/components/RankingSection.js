@@ -1,8 +1,10 @@
-import products from '@/apis/products.json'
+import { getRankedProducts } from '@/lib/data/products'
 import ProductCard from './ProductCard'
 import SectionHeader from './SectionHeader'
 
-export default function RankingSection() {
+export default async function RankingSection() {
+  const products = await getRankedProducts()
+
   return (
     <section className="max-w-7xl mx-auto px-4 py-12">
       <SectionHeader title="실시간 랭킹" subtitle="매시간 업데이트" />
