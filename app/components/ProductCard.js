@@ -1,9 +1,11 @@
 import Image from 'next/image'
 import PriceLabel from './PriceLabel'
+import Link from 'next/link'
 
 export default function ProductCard({ product, rank }) {
   return (
     <div className="group cursor-pointer">
+      <Link href={`/products/${product.id}`}>
       <div className="relative overflow-hidden bg-gray-100 aspect-[3/4]">
         <Image
           src={product.image_url}
@@ -31,6 +33,7 @@ export default function ProductCard({ product, rank }) {
         <p className="text-sm font-medium text-black leading-snug line-clamp-1">{product.name}</p>
         <PriceLabel price={product.price} salePrice={product.sale_price} rate={product.discount_rate} />
       </div>
+      </Link>
     </div>
   )
 }
