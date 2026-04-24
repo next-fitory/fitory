@@ -1,0 +1,94 @@
+{
+  "brands": [
+    {
+      "id": "integer",
+      "name": "string",
+      "image_url": "string | null",
+      "created_at": "timestamp"
+    }
+  ],
+  "categories": [
+    {
+      "id": "integer",
+      "label": "string",
+      "emoji": "string | null",
+      "slug": "string",
+      "sort_order": "integer",
+      "created_at": "timestamp"
+    }
+  ],
+  "banners": [
+    {
+      "id": "integer",
+      "type": "'hero' | 'sale' | 'event'",
+      "badge_text": "string | null",
+      "title": "string",
+      "subtitle": "string | null",
+      "image_url": "string | null",
+      "primary_cta_text": "string | null",
+      "primary_cta_href": "string | null",
+      "secondary_cta_text": "string | null",
+      "secondary_cta_href": "string | null",
+      "sort_order": "integer",
+      "is_active": "boolean",
+      "created_at": "timestamp"
+    }
+  ],
+  "products": [
+    {
+      "id": "integer",
+      "brand_id": "integer | null",
+      "category_id": "integer | null",
+      "name": "string",
+      "description": "string | null",
+      "price": "numeric(10,2)",
+      "sale_price": "numeric(10,2) | null",
+      "discount_rate": "integer(0–100) | null",
+      "stock": "integer",
+      "image_url": "string | null",
+      "created_at": "timestamp"
+    }
+  ],
+  "users": [
+    {
+      "id": "integer",
+      "email": "string",
+      "name": "string",
+      "created_at": "timestamp"
+    }
+  ],
+  "cart_items": [
+    {
+      "id": "integer",
+      "user_id": "integer",
+      "product_id": "integer",
+      "quantity": "integer(>0)",
+      "created_at": "timestamp"
+    }
+  ],
+  "orders": [
+    {
+      "id": "integer",
+      "user_id": "integer",
+      "total_price": "numeric(10,2)",
+      "status": "'pending' | 'paid' | 'shipped' | 'delivered' | 'cancelled'",
+      "created_at": "timestamp"
+    }
+  ],
+  "order_items": [
+    {
+      "id": "integer",
+      "order_id": "integer",
+      "product_id": "integer",
+      "quantity": "integer(>0)",
+      "unit_price": "numeric(10,2)",
+      "created_at": "timestamp"
+    }
+  ],
+  "product_categories": [
+    {
+      "product_id": "integer",
+      "category_id": "integer"
+    }
+  ]
+}
