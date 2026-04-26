@@ -1,21 +1,20 @@
 'use client'
 import ProductCard from "@/app/components/ProductCard";
 import { getProductByCategoryId } from "@/lib/data/products";
+import { useQuery } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
 
 export default function CategoryPage() {
     const { categoryId } = useParams();
-    const [products, setProducts] = useState([]);
 
-    useEffect(() => {
-        const fetchProductsByCategoryId = async() => {
-            if (!categoryId) return;
-            const data = await getProductByCategoryId(categoryId);
-            setProducts(data);
-        }
-        fetchProductsByCategoryId();
-    }, [categoryId]);
+    const { data: products = [], isLoading, isError } = useQuery({
+        queryKey: ['products', 'category', categoryId],
+        queryFn: () => getProductByCategoryId(Number(categoryId)),
+        enabled: !!categoryId,
+    });
+
+    if (isLoading) return <div>로딩 중...</div>;
+    if (isError) return <div>에러가 발생했습니다.</div>;
 
     return (
         <div className="max-w-7xl mx-auto px-4 py-10">

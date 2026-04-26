@@ -3,6 +3,7 @@ import "./globals.css";
 import Header from './components/Header'
 import Footer from './components/Footer'
 import Modal from "./components/Modal";
+import Providers from "./providers";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -26,10 +27,12 @@ export default function RootLayout({ children }) {
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        <Header />
-        {children}
-        <Footer />
-        <Modal />
+        <Providers>
+          <Header />
+          {children}
+          <Footer />
+          <Modal />
+        </Providers>
       </body>
     </html>
   );
