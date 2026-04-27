@@ -28,11 +28,11 @@ export default function Footer() {
           <div className="grid grid-cols-2 md:grid-cols-3 gap-8 text-sm">
             {FOOTER_LINKS.map((group) => (
               <div key={group.title}>
-                <p className="font-bold mb-3">{group.title}</p>
+                <p className="font-bold mb-3 line-through">{group.title}</p>
                 <ul className="space-y-2 text-gray-400 text-xs">
                   {group.links.map((link) => (
                     <li key={link}>
-                      <a href="#" className="hover:text-white transition-colors">{link}</a>
+                      <a href="#" className="hover:text-white transition-colors line-through">{link}</a>
                     </li>
                   ))}
                 </ul>

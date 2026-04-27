@@ -13,12 +13,12 @@ export default function ProfileSection({ user = { name: '홍길동', email: 'gil
         </div>
         <div className="ml-auto flex gap-8 hidden md:flex">
           <div className="text-center">
-            <p className="text-gray-400 text-xs mb-1">적립금</p>
-            <p className="font-black">2,500원</p>
+            <p className="text-gray-400 text-xs mb-1 line-through">적립금</p>
+            <p className="font-black line-through">2,500원</p>
           </div>
           <div className="text-center">
-            <p className="text-gray-400 text-xs mb-1">쿠폰</p>
-            <p className="font-black">3장</p>
+            <p className="text-gray-400 text-xs mb-1 line-through">쿠폰</p>
+            <p className="font-black line-through">3장</p>
           </div>
         </div>
       </div>
