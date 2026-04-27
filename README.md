@@ -99,7 +99,112 @@
     })
     ```
 
+
 <br/>
+
+## 🗺️ ER Diagram
+```mermaid
+erDiagram
+    USERS ||--o{ CART_ITEMS : has
+    USERS ||--o{ ORDERS : places
+    USERS ||--o{ REVIEWS : writes
+    USERS ||--o{ USERS_LIKES : likes
+
+    BRANDS ||--o{ PRODUCTS : owns
+
+    PRODUCTS ||--o{ CART_ITEMS : added_to
+    PRODUCTS ||--o{ ORDER_ITEMS : ordered_as
+    PRODUCTS ||--o{ REVIEWS : reviewed_by
+    PRODUCTS ||--o{ USERS_LIKES : liked_by
+
+    CATEGORIES ||--o{ PRODUCT_CATEGORIES : contains
+    PRODUCTS ||--o{ PRODUCT_CATEGORIES : belongs_to
+
+    ORDERS ||--o{ ORDER_ITEMS : contains
+
+    USERS {
+        int4 id PK
+        text email UK
+        text name
+        timestamptz created_at
+    }
+
+    BRANDS {
+        int4 id PK
+        text name
+        text image_url
+        timestamptz created_at
+    }
+
+    CATEGORIES {
+        int4 id PK
+        text label
+        text emoji
+        text slug UK
+        int4 sort_order
+        timestamptz created_at
+    }
+
+    PRODUCTS {
+        int4 id PK
+        int4 brand_id FK
+        int4 category_id FK
+        text name
+        text description
+        numeric price
+        numeric sale_price
+        int4 discount_rate
+        int4 stock
+        text image_url
+        timestamptz created_at
+    }
+
+    PRODUCT_CATEGORIES {
+        int4 product_id PK, FK
+        int4 category_id PK, FK
+    }
+
+    CART_ITEMS {
+        int4 id PK
+        int4 user_id FK
+        int4 product_id FK
+        int4 quantity
+        timestamptz created_at
+    }
+
+    ORDERS {
+        int4 id PK
+        int4 user_id FK
+        numeric total_price
+        text status
+        timestamptz created_at
+    }
+
+    ORDER_ITEMS {
+        int4 id PK
+        int4 order_id FK
+        int4 product_id FK
+        int4 quantity
+        numeric unit_price
+        timestamptz created_at
+    }
+
+    REVIEWS {
+        int8 id PK
+        int4 product_id FK
+        int4 user_id FK
+        text content
+        int4 rating
+        timestamptz created_at
+    }
+
+    USERS_LIKES {
+        int8 id PK
+        timestamptz created_at
+        int4 user_id FK
+        int4 product_id FK
+    }
+```
 
 ## 📂 Folder Structure
 관심사 분리 원칙에 따라 파일 구조를 구성했습니다.
