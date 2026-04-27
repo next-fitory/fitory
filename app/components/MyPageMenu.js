@@ -4,29 +4,31 @@ import { useLogout } from '@/hooks/useLogout'
 
 export default function MyPageMenu() {
   const handleLogout = useLogout()
+  const getItemClassName = (item) =>
+    `text-sm text-gray-600 hover:text-black hover:underline transition-all${item.strikeThrough ? ' line-through' : ''}`
 
   const groups = [
     {
       title: '쇼핑 정보',
       items: [
         { label: '주문 내역', href: '/mypage/orders' },
-        { label: '취소/반품/교환 내역', href: '#' },
-        { label: '장바구니', href: '#' },
+        { label: '취소/반품/교환 내역', href: '#', strikeThrough: true },
+        { label: '장바구니', href: '/cart' },
       ],
     },
     {
       title: '나의 활동',
       items: [
         { label: '좋아요', href: '/likes' },
-        { label: '나의 상품 문의', href: '#' },
-        { label: '나의 상품 리뷰', href: '#' },
+        { label: '나의 상품 문의', href: '#', strikeThrough: true },
+        { label: '나의 상품 리뷰', href: '#', strikeThrough: true },
       ],
     },
     {
       title: '회원 정보',
       items: [
-        { label: '회원 정보 수정', href: '#' },
-        { label: '배송지 관리', href: '#' },
+        { label: '회원 정보 수정', href: '#', strikeThrough: true },
+        { label: '배송지 관리', href: '#', strikeThrough: true },
         { label: '로그아웃', href: '#', onClick: handleLogout },
       ],
     },
@@ -46,14 +48,14 @@ export default function MyPageMenu() {
                   {item.onClick ? (
                     <button
                       onClick={item.onClick}
-                      className="text-sm text-gray-600 hover:text-black hover:underline transition-all"
+                      className={getItemClassName(item)}
                     >
                       {item.label}
                     </button>
                   ) : (
                     <a
                       href={item.href}
-                      className="text-sm text-gray-600 hover:text-black hover:underline transition-all"
+                      className={getItemClassName(item)}
                     >
                       {item.label}
                     </a>
