@@ -2,11 +2,12 @@ import Image from 'next/image'
 import PriceLabel from './PriceLabel'
 import Link from 'next/link'
 import LikesButton from './LikesButton'
+import { truncateText } from '@/lib/utils/format'
 
 export default function ProductCard({ product, rank }) {
   return (
     <div className="group cursor-pointer">
-      <div className="relative overflow-hidden bg-gray-100 aspect-[3/4]">
+      <div className="relative overflow-hidden bg-gray-100 aspect-[3/4] min-w-[240px] max-w-[240px]">
         <Link href={`/products/${product.id}`}>
           <Image
             src={product.image_url}
@@ -21,12 +22,12 @@ export default function ProductCard({ product, rank }) {
             {rank}
           </span>
         )}
-        <LikesButton product={product}/>
+        <LikesButton product={product} />
       </div>
       <Link href={`/products/${product.id}`}>
         <div className="mt-2 space-y-0.5">
           <p className="text-xs text-gray-500 font-medium">{product.brands?.name}</p>
-          <p className="text-sm font-medium text-black leading-snug line-clamp-1">{product.name}</p>
+          <p className="text-sm font-medium text-black leading-snug line-clamp-1">{truncateText(product.name, 20)}</p>
           <PriceLabel price={product.price} salePrice={product.sale_price} rate={product.discount_rate} />
         </div>
       </Link>
