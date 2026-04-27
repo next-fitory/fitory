@@ -17,16 +17,16 @@ export default function ProductDetailPage() {
         enabled: !!productId,
     });
 
-    if (isLoading) return <div>상품 정보를 불러오는 중...</div>;
-    if (isError) return <div>상품 정보를 가져오는데 실패했습니다.</div>;
-
-    return (
-        <>
-            {product && (
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
-                    <ProductDetail key={product.id} product={product}/>
-                </div>
-            )}
-        </>
+    if (isLoading) return (
+        <div className="flex justify-center items-center min-h-screen">
+            <div className="w-6 h-6 border-2 border-black border-t-transparent rounded-full animate-spin" />
+        </div>
     );
+    if (isError) return (
+        <div className="flex justify-center items-center min-h-screen text-sm text-gray-400">
+            상품 정보를 가져오는데 실패했습니다.
+        </div>
+    );
+
+    return <ProductDetail product={product} />;
 }
