@@ -16,6 +16,15 @@
 
 ## 👨‍💻 Team & Contribution
 각 구성원이 핵심 도메인을 하나씩 전담하여 구현했습니다.
+<table>
+  <tbody>
+    <tr>
+      <td align="center"><a href="https://github.com/yyubin"><img src="https://avatars.githubusercontent.com/yyubin" width="120px;" alt="박유빈"/><br /><sub><b>박유빈</b></sub></a><br /></td>
+      <td align="center"><a href="https://github.com/dh0250"><img src="https://avatars.githubusercontent.com/dh0250" width="120px;" alt="한다현"/><br /><sub><b>한다현</b></sub></a><br /></td>
+     <td align="center"><a href="https://github.com/chan-nni"><img src="https://avatars.githubusercontent.com/chan-nni" width="120px;" alt="강찬미"/><br /><sub><b>강찬미</b></sub></a><br /></td>
+    </tr>
+  </tbody>
+</table>
 
 * **박유빈 (공통 상태 관리):** Zustand 기반 전역 상태 설계 (로그인 세션 및 모달 시스템)
 * **한다현 (장바구니 & 상품):** 장바구니 상태(`useCartStore`) 및 상품 렌더링 로직 구현
