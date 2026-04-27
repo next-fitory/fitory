@@ -11,7 +11,7 @@ export default function MyPageMenu() {
     {
       title: '나의 활동',
       items: [
-        { label: '좋아요', href: '#' },
+        { label: '좋아요', href: '/likes' },
         { label: '나의 상품 문의', href: '#' },
         { label: '나의 상품 리뷰', href: '#' },
       ],

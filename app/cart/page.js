@@ -25,7 +25,6 @@ export default function CartPage() {
         if (selectedIds.length === cart.length) {
             setSelectedIds([]);
 
-
         } else {
             setSelectedIds(cart.map((item) => item.id));
         }
