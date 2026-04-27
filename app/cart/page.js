@@ -59,6 +59,10 @@ export default function CartPage() {
         router.push('/')
     }
 
+    const productClickHandler = (productId) => {
+        router.push(`/products/${productId}`);
+    }
+
     return (
         <div className="min-h-screen bg-gray-50">
             {/* 헤더 */}
@@ -137,6 +141,7 @@ export default function CartPage() {
                                 item={item}
                                 checked={selectedIds.includes(item.id)}
                                 onCheck={toggleSelect}
+                                onClick={productClickHandler}
                             />
                         ))}
                     </div>

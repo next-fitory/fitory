@@ -1,22 +1,19 @@
 'use client'
 
 import Link from 'next/link'
-import { useEffect, useState } from 'react'
-import { useUserStore } from '@/store/useUserStore'
+import { useQuery } from '@tanstack/react-query'
+import { useRequireAuth } from '@/hooks/useRequireAuth'
 import { getOrdersByUserId } from '@/lib/data/orders'
 import OrderCard from '@/app/components/OrderCard'
 
 export default function OrdersPage() {
-    const { user } = useUserStore()
-    const [orders, setOrders] = useState(null)
+    const user = useRequireAuth()
 
-    useEffect(() => {
-        const fetchData = async () => {
-            const data = await getOrdersByUserId(user.id)
-            setOrders(data)
-        }
-        fetchData()
-    }, [user])
+    const { data: orders, isLoading } = useQuery({
+        queryKey: ['orders', user?.id],
+        queryFn: () => getOrdersByUserId(user.id),
+        enabled: !!user?.id,
+    })
 
     return (
         <div className="min-h-screen bg-gray-50">
@@ -32,11 +29,11 @@ export default function OrdersPage() {
             </div>
 
             <div className="max-w-xl mx-auto px-4 py-6">
-                {orders === null ? (
+                {isLoading ? (
                     <div className="flex justify-center py-24">
                         <div className="w-6 h-6 border-2 border-black border-t-transparent rounded-full animate-spin" />
                     </div>
-                ) : orders.length === 0 ? (
+                ) : orders?.length === 0 ? (
                     <div className="flex flex-col items-center justify-center py-24 text-center">
                         <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mb-4">
                             <svg className="w-8 h-8 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -46,18 +43,15 @@ export default function OrdersPage() {
                         </div>
                         <p className="text-sm font-bold text-gray-400 mb-1">주문 내역이 없습니다</p>
                         <p className="text-xs text-gray-300 mb-6">첫 구매를 시작해보세요</p>
-                        <Link
-                            href="/"
-                            className="bg-black text-white text-sm font-bold px-6 py-2.5 rounded-full hover:bg-gray-800 transition-colors"
-                        >
+                        <Link href="/" className="bg-black text-white text-sm font-bold px-6 py-2.5 rounded-full hover:bg-gray-800 transition-colors">
                             쇼핑하러 가기
                         </Link>
                     </div>
                 ) : (
                     <>
-                        <p className="text-xs text-gray-400 mb-4">총 {orders.length}건</p>
+                        <p className="text-xs text-gray-400 mb-4">총 {orders?.length}건</p>
                         <div className="flex flex-col gap-3">
-                            {orders.map(order => (
+                            {orders?.map(order => (
                                 <OrderCard key={order.id} order={order} />
                             ))}
                         </div>

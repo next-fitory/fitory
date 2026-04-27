@@ -3,7 +3,7 @@
 import { useCartStore } from "@/store/useCartStore"
 import { formatPrice } from "@/lib/utils/format"
 
-export default function CartItem({ item, checked, onCheck }) {
+export default function CartItem({ item, checked, onCheck, onClick }) {
     const removeFromCart = useCartStore((state) => state.removeFromCart)
     const hasDiscount = item.price > item.sale_price
 
@@ -24,7 +24,7 @@ export default function CartItem({ item, checked, onCheck }) {
             </div>
 
             {/* 이미지 */}
-            <div className="w-20 h-20 rounded-xl bg-gray-100 overflow-hidden flex-shrink-0">
+            <div className="w-20 h-20 rounded-xl bg-gray-100 overflow-hidden flex-shrink-0" onClick={() => onClick(item.id)}>
                 {item.image_url ? (
                     <img src={item.image_url} alt={item.name} className="w-full h-full object-cover" />
                 ) : (

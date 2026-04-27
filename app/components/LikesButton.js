@@ -2,7 +2,6 @@
 import { useLikesStore } from "@/store/useLikesStore";
 import { useUiStore } from "@/store/useUiStore";
 import { useUserStore } from "@/store/useUserStore"
-import { useEffect } from "react";
 
 export default function LikesButton({product}) {
     const user = useUserStore(state => state.user);
@@ -10,13 +9,6 @@ export default function LikesButton({product}) {
 
     const likedIds = useLikesStore(state => state.likedIds);
     const toggleLike = useLikesStore(state => state.toggleLike);
-    const fetchLikes = useLikesStore(state => state.fetchLikes);
-
-    useEffect(() => {
-        if (user?.id) {
-            fetchLikes(user.id);
-        }
-    }, [user?.id, fetchLikes]);
     
     const handleClick = async(e) => {
         e.preventDefault(); 
