@@ -17,8 +17,8 @@ export default function ProductDetailPage() {
     const { data: product, isLoading, isError } = useQuery({
         queryKey: ['product', productId],
         queryFn: async () => {
-        const data = await getProductByProductId(productId);
-        return data[0];
+            const data = await getProductByProductId(productId);
+            return data[0];
         },
         enabled: !!productId,
     });
@@ -32,6 +32,7 @@ export default function ProductDetailPage() {
         <div className="flex justify-center items-center min-h-screen text-sm text-gray-400">
             상품 정보를 가져오는데 실패했습니다.
         </div>
+    );
 
     const { data: reviews, isLoading: isReviewsLoading } = useQuery({
         queryKey: ['reviews', productId],
@@ -44,9 +45,9 @@ export default function ProductDetailPage() {
             {product && (
                 <>
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
-                        <ProductDetail key={product.id} product={product}/>
+                        <ProductDetail key={product.id} product={product} />
                     </div>
-                    
+
                     {user ? (
                         <ReviewForm productId={productId} userId={user.id} />
                     ) : (
