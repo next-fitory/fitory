@@ -4,6 +4,8 @@ import { useUiStore } from "@/store/useUiStore";
 import { useUserStore } from "@/store/useUserStore";
 import CartItem from "../components/CartItem";
 import { useState } from "react";
+
+import { createCompleteOrder } from "@/lib/data/orders";
 import { useRouter } from "next/navigation";
 
 export default function CartPage() {
@@ -16,7 +18,7 @@ export default function CartPage() {
     const openModal = useUiStore(state => state.openModal);
 
     const [selectedIds, setSelectedIds] = useState([]);
-    
+
     const selectedItem = cart.filter(item => selectedIds.includes(item.id));
 
     const handeleSelectAll = () => {
@@ -29,10 +31,10 @@ export default function CartPage() {
     }
 
     const toggleSelect = id => {
-        setSelectedIds(prev => 
+        setSelectedIds(prev =>
             prev.includes(id)
-            ? prev.filter(itemId => itemId !== id)
-            : [...prev, id]
+                ? prev.filter(itemId => itemId !== id)
+                : [...prev, id]
         )
     }
 
@@ -42,7 +44,7 @@ export default function CartPage() {
     }
 
     const handleBuy = () => {
-        if(!user) {
+        if (!user) {
             openModal(
                 "login",
                 {
@@ -58,12 +60,21 @@ export default function CartPage() {
             return;
         }
 
-        if(selectedIds.length === 0){
+        if (selectedIds.length === 0) {
             alert('구매할 상품을 선택해주세요.');
             return;
         }
-        
-        console.log(selectedIds); 
+
+        const totalPrice = selectedItem.reduce((acc, item) => acc + item.sale_price * item.quantity, 0);
+
+        const order = createCompleteOrder(user.id, totalPrice, selectedItem);
+
+        if (order) {
+            alert("주문이 완료되었습니다");
+        }
+
+        handleRemoveSelected();
+
         router.push(`/`);
     }
 
@@ -71,8 +82,8 @@ export default function CartPage() {
         <>
             <div>
                 {cart.map(item => (
-                    <CartItem 
-                        key={item.id} 
+                    <CartItem
+                        key={item.id}
                         item={item}
                         checked={selectedIds.includes(item.id)}
                         onCheck={toggleSelect} />

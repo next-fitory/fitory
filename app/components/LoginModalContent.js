@@ -9,7 +9,7 @@ export default function LoginModalContent({
     title = "로그인",
 }) {
     const closeModal = useUiStore((state) => state.closeModal);
-    const { setUser } = useUserStore();
+    const { user, setUser } = useUserStore();
     const [form, setForm] = useState({
         email: "",
     });
@@ -36,6 +36,7 @@ export default function LoginModalContent({
                     email: userData.email,
                     name: userData.name
                 })
+
                 alert("로그인 완료");
             } else {
                 alert("등록되지 않은 이메일입니다.");

@@ -1,64 +1,90 @@
 'use client'
 
-import { createClient } from "@/lib/supabase/client";
-import { useCartStore } from "@/store/useCartStore";
+import { createClient } from "@/lib/supabase/client"
+import { useCartStore } from "@/store/useCartStore"
 import { useUserStore } from "@/store/useUserStore"
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useRouter } from "next/navigation"
+import { useState } from "react"
 
-export default function AddToCartButton({product}) {
-    const router = useRouter();
+export default function AddToCartButton({ product }) {
+  const router = useRouter()
+  const [quantity, setQuantity] = useState(1)
+  const { user } = useUserStore()
+  const addToCart = useCartStore(state => state.addToCart)
 
-    const [quantity, setQuantity] = useState(1);
-    const { user } =useUserStore();
+  const decrease = () => setQuantity(q => Math.max(1, q - 1))
+  const increase = () => setQuantity(q => Math.min(product.stock, q + 1))
 
-    const addToCart = useCartStore(state => state.addToCart);
-
-    const handleCartClick = () => {
-        router.push("/cart");
+  const handleAddToCart = async () => {
+    if (quantity < 1) {
+      alert("수량을 선택하세요")
+      return
     }
 
-    const handleClick = async () => {
-        if (quantity < 1) {
-            alert("수량을 선택하세요");
-            return;
-        }
-    
-        if (user?.id) {
-            const supabase = createClient();
-
-            const{ error } = await supabase
-                .from("cart_items")
-                .upsert(
-                    {
-                        user_id: user.id,
-                        product_id: product.id,
-                        quantity
-                    },
-                    {
-                        onConflict: "user_id,product_id"
-                    }
-                );
-            if (error) {
-                alert('장바구니 저장 실패')
-                return;
-            } 
-        } 
-        addToCart(product, quantity);
-        alert("장바구니에 담겼습니다.")
+    if (user?.id) {
+      const supabase = createClient()
+      const { error } = await supabase
+        .from("cart_items")
+        .upsert(
+          { user_id: user.id, product_id: product.id, quantity },
+          { onConflict: "user_id,product_id" }
+        )
+      if (error) {
+        alert("장바구니 저장 실패")
+        return
+      }
     }
 
-    return (
-        <>
-        <input 
-            type="number"
-            min={1}
-            style={{border: "1px solid black"}}
-            value={quantity}  
-            onChange={(e) => setQuantity(Number(e.target.value))}  
-        />
-        <button onClick={handleClick}>장바구니</button>       
-        <button onClick={handleCartClick}>장바구니 보기</button>       
-        </>
-    )
+    addToCart(product, quantity)
+    alert("장바구니에 담겼습니다.")
+  }
+
+  const isOutOfStock = product.stock <= 0
+
+  return (
+    <div className="flex flex-col gap-3">
+      {/* 수량 선택 */}
+      <div className="flex items-center justify-between bg-gray-50 rounded-xl px-4 py-3">
+        <span className="text-sm font-bold text-gray-700">수량</span>
+        <div className="flex items-center gap-3">
+          <button
+            onClick={decrease}
+            disabled={quantity <= 1}
+            className="w-8 h-8 rounded-full border border-gray-200 bg-white flex items-center justify-center text-gray-700 hover:bg-gray-100 disabled:opacity-30 transition-colors"
+          >
+            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M20 12H4" />
+            </svg>
+          </button>
+          <span className="w-6 text-center text-sm font-black">{quantity}</span>
+          <button
+            onClick={increase}
+            disabled={quantity >= product.stock}
+            className="w-8 h-8 rounded-full border border-gray-200 bg-white flex items-center justify-center text-gray-700 hover:bg-gray-100 disabled:opacity-30 transition-colors"
+          >
+            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 4v16m8-8H4" />
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      {/* 버튼 */}
+      <div className="flex gap-2">
+        <button
+          onClick={handleAddToCart}
+          disabled={isOutOfStock}
+          className="flex-1 bg-black text-white text-sm font-black py-3.5 rounded-xl hover:bg-gray-800 disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors"
+        >
+          {isOutOfStock ? '품절' : '장바구니 담기'}
+        </button>
+        <button
+          onClick={() => router.push("/cart")}
+          className="flex-1 border-2 border-black text-black text-sm font-black py-3.5 rounded-xl hover:bg-gray-50 transition-colors"
+        >
+          장바구니 보기
+        </button>
+      </div>
+    </div>
+  )
 }

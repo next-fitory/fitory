@@ -3,7 +3,7 @@ export default function MyPageMenu() {
     {
       title: '쇼핑 정보',
       items: [
-        { label: '주문 내역', href: '#' },
+        { label: '주문 내역', href: '/mypage/orders' },
         { label: '취소/반품/교환 내역', href: '#' },
         { label: '장바구니', href: '#' },
       ],

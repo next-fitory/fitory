@@ -5,8 +5,9 @@ import { useUiStore } from '@/store/useUiStore';
 import { useUserStore } from '@/store/useUserStore';
 import Link from 'next/link';
 import { useState } from 'react'
+import { redirect } from 'next/navigation';
 
-const NAV = ['신상품', '남성', '여성', '아우터', '상의', '하의', '신발', '브랜드', '세일']
+const NAV = ['아우터', '상의', '하의', '원피스', '신발', '가방', '액세서리', '모자']
 
 export default function Header() {
   const [searchOpen, setSearchOpen] = useState(false);
@@ -29,6 +30,14 @@ export default function Header() {
     );
   }
 
+  const restrictWithoutLogin = () => {
+    if (!user) {
+      alert("로그인을 해주세요");
+      return;
+    }
+    redirect("/mypage");
+  }
+
 
   return (
     <header className="sticky top-0 z-50 bg-black text-white">
@@ -38,10 +47,10 @@ export default function Header() {
           <Link href="/" className="text-2xl font-black tracking-widest">FITORY</Link>
 
           <nav className="hidden md:flex items-center gap-6 text-sm font-medium">
-            {NAV.map((item) => (
+            {NAV.map((item, index) => (
               <a
                 key={item}
-                href="#"
+                href={`/category/${index + 1}`}
                 className="hover:text-gray-300 transition-colors whitespace-nowrap"
               >
                 {item}
@@ -77,14 +86,14 @@ export default function Header() {
 
             {!user && <button className="hidden md:block text-sm font-medium hover:text-gray-300" onClick={handleLogin}>로그인</button>}
             {user && <button className="hidden md:block text-sm font-medium hover:text-gray-300" onClick={logout}>로그아웃</button>}
-            <a href="/mypage" className="hidden md:block text-sm font-medium hover:text-gray-300">마이페이지</a>
+            <a className="hidden md:block text-sm font-medium hover:text-gray-300" onClick={restrictWithoutLogin}>마이페이지</a>
           </div>
         </div>
 
         {/* 모바일 카테고리 스크롤 */}
         <div className="md:hidden flex gap-4 overflow-x-auto pb-2 text-sm font-medium scrollbar-none">
-          {NAV.map((item) => (
-            <a key={item} href="#" className="whitespace-nowrap hover:text-gray-300">{item}</a>
+          {NAV.map((item, index) => (
+            <a key={item} href={`/category/${index + 1}`} className="whitespace-nowrap hover:text-gray-300">{item}</a>
           ))}
         </div>
       </div>
