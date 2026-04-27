@@ -1,5 +1,6 @@
 'use client'
 
+import { useCartStore } from '@/store/useCartStore';
 import { useUiStore } from '@/store/useUiStore';
 import { useUserStore } from '@/store/useUserStore';
 import Link from 'next/link';
@@ -10,6 +11,7 @@ const NAV = ['신상품', '남성', '여성', '아우터', '상의', '하의', '
 export default function Header() {
   const [searchOpen, setSearchOpen] = useState(false);
   const { user, logout } = useUserStore();
+  const cart = useCartStore((state) => state.cart);
   const openModal = useUiStore((state) => state.openModal);
 
   const handleLogin = () => {
@@ -64,12 +66,12 @@ export default function Header() {
               </button>
             )}
 
-            {user ? (<button aria-label="장바구니" className="relative">
+            {user ? (<Link href="/cart" aria-label="장바구니" className="relative">
               <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13l-1.4 7h12.8M7 13H5.4M10 21a1 1 0 1 0 2 0 1 1 0 0 0-2 0zm7 0a1 1 0 1 0 2 0 1 1 0 0 0-2 0z" />
               </svg>
-              <span className="absolute -top-1.5 -right-1.5 bg-red-500 text-white text-[10px] font-bold rounded-full w-4 h-4 flex items-center justify-center">2</span>
-            </button>) : (
+              <span className="absolute -top-1.5 -right-1.5 bg-red-500 text-white text-[10px] font-bold rounded-full w-4 h-4 flex items-center justify-center">{cart.length}</span>
+            </Link>) : (
               <></>
             )}
 
