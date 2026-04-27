@@ -5,6 +5,7 @@ import { useUiStore } from '@/store/useUiStore';
 import { useUserStore } from '@/store/useUserStore';
 import Link from 'next/link';
 import { useState } from 'react'
+import { redirect } from 'next/navigation';
 
 const NAV = ['아우터', '상의', '하의', '원피스', '신발', '가방', '액세서리', '모자']
 
@@ -27,6 +28,14 @@ export default function Header() {
         escapeClosable: true,
       }
     );
+  }
+
+  const restrictWithoutLogin = () => {
+    if (!user) {
+      alert("로그인을 해주세요");
+      return;
+    }
+    redirect("/mypage");
   }
 
 
@@ -77,7 +86,7 @@ export default function Header() {
 
             {!user && <button className="hidden md:block text-sm font-medium hover:text-gray-300" onClick={handleLogin}>로그인</button>}
             {user && <button className="hidden md:block text-sm font-medium hover:text-gray-300" onClick={logout}>로그아웃</button>}
-            <a href="/mypage" className="hidden md:block text-sm font-medium hover:text-gray-300">마이페이지</a>
+            <a className="hidden md:block text-sm font-medium hover:text-gray-300" onClick={restrictWithoutLogin}>마이페이지</a>
           </div>
         </div>
 

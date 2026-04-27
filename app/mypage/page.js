@@ -1,19 +1,22 @@
-import Header from '../components/Header'
-import Footer from '../components/Footer'
+"use client";
+
 import ProfileSection from '../components/ProfileSection'
 import OrderSummarySection from '../components/OrderSummarySection'
 import MyPageMenu from '../components/MyPageMenu'
+import { useUserStore } from "@/store/useUserStore";
 
 export default function MyPage() {
+  const { user } = useUserStore();
+
+  console.log(user);
+
   return (
     <div className="min-h-screen bg-white text-black flex flex-col">
-      <Header />
       <main className="flex-1">
-        <ProfileSection />
+        <ProfileSection user={user} />
         <OrderSummarySection />
         <MyPageMenu />
       </main>
-      <Footer />
     </div>
   )
 }
