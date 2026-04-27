@@ -2,20 +2,20 @@
 
 import { useCartStore } from "@/store/useCartStore"
 import { useUiStore } from "@/store/useUiStore"
-import { useUserStore } from "@/store/useUserStore"
 import CartItem from "../components/CartItem"
 import { useState } from "react"
 import { createCompleteOrder } from "@/lib/data/orders"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
 import { formatPrice } from "@/lib/utils/format"
+import { useRequireAuth } from "@/hooks/useRequireAuth"
 
 export default function CartPage() {
-    const cart = useCartStore(state => state.cart)
-    const user = useUserStore(state => state.user)
+    const user = useRequireAuth()
     const removeFromCart = useCartStore(state => state.removeFromCart)
     const clearCart = useCartStore(state => state.clearCart)
     const openModal = useUiStore(state => state.openModal)
+    const { cart } = useCartStore();
     const router = useRouter()
 
     const [selectedIds, setSelectedIds] = useState([])

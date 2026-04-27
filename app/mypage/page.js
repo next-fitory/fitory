@@ -3,12 +3,11 @@
 import ProfileSection from '../components/ProfileSection'
 import OrderSummarySection from '../components/OrderSummarySection'
 import MyPageMenu from '../components/MyPageMenu'
-import { useUserStore } from "@/store/useUserStore";
+import { useRequireAuth } from '@/hooks/useRequireAuth';
 
 export default function MyPage() {
-  const { user } = useUserStore();
+  const user = useRequireAuth();
 
-  console.log(user);
 
   return (
     <div className="min-h-screen bg-white text-black flex flex-col">

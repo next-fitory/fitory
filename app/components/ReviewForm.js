@@ -3,8 +3,10 @@
 import { useState } from 'react'
 import { createReview } from '@/lib/data/reviews'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useRequireAuth } from '@/hooks/useRequireAuth'
 
 export default function ReviewForm({ productId, userId }) {
+  useRequireAuth()
   const [content, setContent] = useState('')
   const [rating, setRating] = useState(5)
   const queryClient = useQueryClient()

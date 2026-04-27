@@ -1,4 +1,10 @@
+'use client'
+
+import { useLogout } from '@/hooks/useLogout'
+
 export default function MyPageMenu() {
+  const handleLogout = useLogout()
+
   const groups = [
     {
       title: '쇼핑 정보',
@@ -21,7 +27,7 @@ export default function MyPageMenu() {
       items: [
         { label: '회원 정보 수정', href: '#' },
         { label: '배송지 관리', href: '#' },
-        { label: '로그아웃', href: '#' },
+        { label: '로그아웃', href: '#', onClick: handleLogout },
       ],
     },
   ]
@@ -37,12 +43,21 @@ export default function MyPageMenu() {
             <ul className="space-y-3">
               {group.items.map((item) => (
                 <li key={item.label}>
-                  <a
-                    href={item.href}
-                    className="text-sm text-gray-600 hover:text-black hover:underline transition-all"
-                  >
-                    {item.label}
-                  </a>
+                  {item.onClick ? (
+                    <button
+                      onClick={item.onClick}
+                      className="text-sm text-gray-600 hover:text-black hover:underline transition-all"
+                    >
+                      {item.label}
+                    </button>
+                  ) : (
+                    <a
+                      href={item.href}
+                      className="text-sm text-gray-600 hover:text-black hover:underline transition-all"
+                    >
+                      {item.label}
+                    </a>
+                  )}
                 </li>
               ))}
             </ul>

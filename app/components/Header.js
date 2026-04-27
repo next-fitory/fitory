@@ -5,15 +5,18 @@ import { useUiStore } from '@/store/useUiStore';
 import { useUserStore } from '@/store/useUserStore';
 import Link from 'next/link';
 import { useState } from 'react'
-import { redirect } from 'next/navigation';
+import { useRouter } from 'next/navigation';
+import { useLogout } from '@/hooks/useLogout';
 
 const NAV = ['아우터', '상의', '하의', '원피스', '신발', '가방', '액세서리', '모자']
 
 export default function Header() {
   const [searchOpen, setSearchOpen] = useState(false);
-  const { user, logout } = useUserStore();
+  const { user } = useUserStore();
   const cart = useCartStore((state) => state.cart);
   const openModal = useUiStore((state) => state.openModal);
+  const router = useRouter();
+  const handleLogout = useLogout();
 
   const handleLogin = () => {
     openModal(
@@ -30,12 +33,12 @@ export default function Header() {
     );
   }
 
-  const restrictWithoutLogin = () => {
+const restrictWithoutLogin = () => {
     if (!user) {
       alert("로그인을 해주세요");
       return;
     }
-    redirect("/mypage");
+    router.push("/mypage");
   }
 
 
@@ -85,7 +88,7 @@ export default function Header() {
             )}
 
             {!user && <button className="hidden md:block text-sm font-medium hover:text-gray-300" onClick={handleLogin}>로그인</button>}
-            {user && <button className="hidden md:block text-sm font-medium hover:text-gray-300" onClick={logout}>로그아웃</button>}
+            {user && <button className="hidden md:block text-sm font-medium hover:text-gray-300" onClick={handleLogout}>로그아웃</button>}
             <a className="hidden md:block text-sm font-medium hover:text-gray-300" onClick={restrictWithoutLogin}>마이페이지</a>
           </div>
         </div>
