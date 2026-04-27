@@ -14,6 +14,8 @@ export default function MyPage() {
         <MyPageMenu />
       </main>
       <Footer />
+
     </div>
   )
 }
+

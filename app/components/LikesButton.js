@@ -17,7 +17,7 @@ export default function LikesButton({product}) {
             fetchLikes(user.id);
         }
     }, [user?.id, fetchLikes]);
-
+    
     const handleClick = async(e) => {
         e.preventDefault(); 
         e.stopPropagation();
