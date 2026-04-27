@@ -7,7 +7,7 @@ import Link from 'next/link';
 import { useState } from 'react'
 import { redirect } from 'next/navigation';
 
-const NAV = ['신상품', '남성', '여성', '아우터', '상의', '하의', '신발', '브랜드', '세일']
+const NAV = ['아우터', '상의', '하의', '원피스', '신발', '가방', '액세서리', '모자']
 
 export default function Header() {
   const [searchOpen, setSearchOpen] = useState(false);
@@ -47,10 +47,10 @@ export default function Header() {
           <Link href="/" className="text-2xl font-black tracking-widest">FITORY</Link>
 
           <nav className="hidden md:flex items-center gap-6 text-sm font-medium">
-            {NAV.map((item) => (
+            {NAV.map((item, index) => (
               <a
                 key={item}
-                href="#"
+                href={`/category/${index + 1}`}
                 className="hover:text-gray-300 transition-colors whitespace-nowrap"
               >
                 {item}
