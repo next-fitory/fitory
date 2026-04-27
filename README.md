@@ -114,25 +114,43 @@
 * **효과:** 장바구니 상태를 일관되게 유지하며, `persist` 미들웨어를 통해 페이지 이동 및 새로고침 이후에도 상태가 유지되도록 했습니다.
 * **핵심 로직:**
     ```JavaScript
-    const handleAddToCart = async () => {
-    if (quantity < 1) {
-      alert("수량을 선택하세요")
-      return
-    }
-
-    if (user?.id) {
-      const supabase = createClient()
-      const { error } = await supabase
-        .from("cart_items")
-        .upsert(
-          { user_id: user.id, product_id: product.id, quantity },
-          { onConflict: "user_id,product_id" }
-        )
-      if (error) {
-        alert("장바구니 저장 실패")
-        return
-      }
-    }
+    export const useCartStore = create(persist((set) => ({
+        cart: [],
+    
+        addToCart: (product, quantity) => set((state) => {
+            const exists = state.cart.find(
+                item => item.id === product.id
+            );
+    
+            if(exists) {
+                return {
+                    cart: state.cart.map(item => 
+                        item.id === product.id 
+                        ? {...item, quantity: item.quantity + quantity}
+                        : item
+                    )
+                }
+            }
+            return {
+                cart: [...state.cart, { ...product, quantity }]
+            }
+        }),
+    
+        removeFromCart: (id) => 
+            set((state) => ({
+    
+                cart: state.cart.filter((item) => item.id !== id),
+            })),
+        
+        updateQuantity: (id, quantity) =>
+            set((state) => ({
+                cart: state.cart.map(item =>
+                    item.id === id? { ...item, quantity } : item
+                ),
+            })),
+    
+        clearCart: () => set({ cart: []})
+    }), { name: "cart" }));
     ```
 
 ### 3. 실시간 리뷰 동기화 (by 강찬미)
