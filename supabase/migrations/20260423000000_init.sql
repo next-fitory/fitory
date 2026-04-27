@@ -90,3 +90,4 @@ CREATE TABLE product_categories (
   category_id uuid NOT NULL REFERENCES categories(id) ON DELETE CASCADE,
   PRIMARY KEY (product_id, category_id)
 );
+

@@ -29,13 +29,16 @@ export default function LoginModalContent({
         try {
             const response = await login(form.email);
 
-            if (response) {
+            if (response && response.length > 0) {
+                const userData = response[0];
                 setUser({
-                    id: response.id,
-                    email: response.email,
-                    name: response.name
+                    id: userData.id,
+                    email: userData.email,
+                    name: userData.name
                 })
                 alert("로그인 완료");
+            } else {
+                alert("등록되지 않은 이메일입니다.");
             }
         } catch (e) {
             alert(e);

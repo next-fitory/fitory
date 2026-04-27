@@ -36,7 +36,6 @@ export default function AddToCartButton({product}) {
                         quantity
                     },
                     {
-                        //user_id, product_id 같으면 같은 데이터로 판단
                         onConflict: "user_id,product_id"
                     }
                 );
