@@ -23,6 +23,12 @@ export default function ProductDetailPage() {
         enabled: !!productId,
     });
 
+    const { data: reviews, isLoading: isReviewsLoading } = useQuery({
+        queryKey: ['reviews', productId],
+        queryFn: () => getReviewsByProductId(productId),
+        enabled: !!productId,
+    });
+
     if (isLoading) return (
         <div className="flex justify-center items-center min-h-screen">
             <div className="w-6 h-6 border-2 border-black border-t-transparent rounded-full animate-spin" />
@@ -34,24 +40,16 @@ export default function ProductDetailPage() {
         </div>
     );
 
-    const { data: reviews, isLoading: isReviewsLoading } = useQuery({
-        queryKey: ['reviews', productId],
-        queryFn: () => getReviewsByProductId(productId),
-        enabled: !!productId,
-    });
-
     return (
         <>
             {product && (
                 <>
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
-                        <ProductDetail key={product.id} product={product} />
-                    </div>
+                    <ProductDetail product={product} />
 
                     {user ? (
                         <ReviewForm productId={productId} userId={user.id} />
                     ) : (
-                        <div className="mt-10 p-6 border rounded-lg text-center bg-gray-50 text-gray-500">
+                        <div className="mt-10 max-w-6xl mx-auto px-4 p-6 border rounded-lg text-center bg-gray-50 text-gray-500">
                             리뷰를 작성하려면 로그인이 필요합니다.
                         </div>
                     )}
@@ -62,7 +60,6 @@ export default function ProductDetailPage() {
                 </>
             )}
         </>
-
     );
 
 }

@@ -1,6 +1,6 @@
 export default function ProductReviews({ reviews }) {
   return (
-    <section className="mt-12 max-w-4xl mx-auto px-4 text-slate-900">
+    <section className="mt-12 max-w-6xl mx-auto px-4 text-slate-900">
       <div className="flex items-center justify-between mb-8 pb-4 border-b-2 border-slate-100">
         <h2 className="text-xl font-bold flex items-center gap-2">
           리뷰 <span className="text-blue-600">{reviews.length}</span>

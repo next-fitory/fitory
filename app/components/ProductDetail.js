@@ -12,9 +12,10 @@ export default function ProductDetail({ product }) {
     const hasDiscount = product.discount_rate > 0
 
     return (
-        <div className="min-h-screen bg-white">
+        <div className="bg-white">
+            {/* 헤더 */}
             <div className="sticky top-0 z-10 bg-white/80 backdrop-blur-sm border-b border-gray-100">
-                <div className="max-w-xl mx-auto flex items-center px-4 py-3">
+                <div className="max-w-5xl mx-auto flex items-center px-4 py-3">
                     <button
                         onClick={() => router.back()}
                         className="p-1.5 rounded-full hover:bg-gray-100 transition-colors"
@@ -26,8 +27,10 @@ export default function ProductDetail({ product }) {
                 </div>
             </div>
 
-            <div className="max-w-xl mx-auto pb-40">
-                <div className="w-full aspect-square bg-gray-50 overflow-hidden">
+            {/* 본문: 모바일 세로 / 데스크탑 가로 2열 */}
+            <div className="max-w-5xl mx-auto px-4 py-6 md:py-10 md:grid md:grid-cols-2 md:gap-12 md:items-start">
+                {/* 이미지 */}
+                <div className="w-full aspect-square bg-gray-50 rounded-2xl overflow-hidden">
                     {product.image_url ? (
                         <img
                             src={product.image_url}
@@ -44,21 +47,18 @@ export default function ProductDetail({ product }) {
                     )}
                 </div>
 
-                {/* 상품 정보 */}
-                <div className="px-5 pt-5">
-                    {/* 브랜드 */}
+                {/* 정보 */}
+                <div className="pt-6 md:pt-0 md:sticky md:top-20">
                     {product.brands?.name && (
                         <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">
                             {product.brands.name}
                         </p>
                     )}
 
-                    {/* 상품명 */}
                     <h1 className="text-xl font-black text-black leading-snug mb-4">
                         {product.name}
                     </h1>
 
-                    {/* 가격 */}
                     <div className="flex items-end gap-2 mb-1">
                         {hasDiscount && (
                             <span className="text-sm font-bold text-red-500 bg-red-50 px-2 py-0.5 rounded-full">
@@ -75,24 +75,18 @@ export default function ProductDetail({ product }) {
                         </p>
                     )}
 
-                    <div className="flex items-center gap-1.5 mt-4">
+                    <div className="flex items-center gap-1.5 mt-4 mb-6">
                         <div className={`w-1.5 h-1.5 rounded-full ${product.stock > 0 ? 'bg-green-400' : 'bg-red-400'}`} />
                         <p className="text-xs text-gray-500">
                             {product.stock > 0 ? `재고 ${product.stock}개` : '품절'}
                         </p>
                     </div>
-                </div>
 
-                {/* 구분선 */}
-                <div className="mx-5 my-6 border-t border-gray-100" />
-
-                {/* 장바구니 버튼 영역 */}
-                <div className="px-5">
-                    <AddToCartButton product={product} />
+                    <div className="border-t border-gray-100 pt-6">
+                        <AddToCartButton product={product} />
+                    </div>
                 </div>
             </div>
-
-            <div className="fixed bottom-0 left-0 right-0 h-10 bg-gradient-to-t from-white to-transparent pointer-events-none" />
         </div>
     )
 }

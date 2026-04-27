@@ -32,7 +32,7 @@ export default function ReviewForm({ productId, userId }) {
   }
 
   return (
-    <div className="mt-12 max-w-4xl mx-auto px-4 w-full">
+    <div className="mt-12 max-w-6xl mx-auto px-4 w-full">
       <form 
         onSubmit={handleSubmit} 
         className="w-full p-8 bg-white rounded-2xl border border-slate-200 shadow-sm"
