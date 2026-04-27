@@ -1,6 +1,6 @@
 'use client'
 
-import { createClient } from "@/lib/supabase/client"
+import { upsertCartItem } from "@/lib/data/cartItems"
 import { useCartStore } from "@/store/useCartStore"
 import { useUserStore } from "@/store/useUserStore"
 import { useRouter } from "next/navigation"
@@ -22,14 +22,9 @@ export default function AddToCartButton({ product }) {
     }
 
     if (user?.id) {
-      const supabase = createClient()
-      const { error } = await supabase
-        .from("cart_items")
-        .upsert(
-          { user_id: user.id, product_id: product.id, quantity },
-          { onConflict: "user_id,product_id" }
-        )
-      if (error) {
+      try {
+        await upsertCartItem(user.id, product.id, quantity)
+      } catch {
         alert("장바구니 저장 실패")
         return
       }
@@ -43,7 +38,6 @@ export default function AddToCartButton({ product }) {
 
   return (
     <div className="flex flex-col gap-3">
-      {/* 수량 선택 */}
       <div className="flex items-center justify-between bg-gray-50 rounded-xl px-4 py-3">
         <span className="text-sm font-bold text-gray-700">수량</span>
         <div className="flex items-center gap-3">
@@ -69,7 +63,6 @@ export default function AddToCartButton({ product }) {
         </div>
       </div>
 
-      {/* 버튼 */}
       <div className="flex gap-2">
         <button
           onClick={handleAddToCart}
