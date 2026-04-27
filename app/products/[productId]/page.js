@@ -4,11 +4,15 @@ import { getProductByProductId } from '@/lib/data/products';
 import { getReviewsByProductId } from '@/lib/data/reviews';
 import ProductDetail from "@/app/components/ProductDetail";
 import ProductReviews from "@/app/components/ProductReviews";
+import ReviewForm from "@/app/components/ReviewForm";
 import { useParams } from "next/navigation"
 import { useQuery } from '@tanstack/react-query';
+import { useUserStore } from '@/store/useUserStore';
 
 export default function ProductDetailPage() {
     const { productId } = useParams();
+
+    const { user } = useUserStore();
 
     const { data: product, isLoading, isError } = useQuery({
         queryKey: ['product', productId],
@@ -36,6 +40,14 @@ export default function ProductDetailPage() {
                         <ProductDetail key={product.id} product={product}/>
                     </div>
                     
+                    {user ? (
+                        <ReviewForm productId={productId} userId={user.id} />
+                    ) : (
+                        <div className="mt-10 p-6 border rounded-lg text-center bg-gray-50 text-gray-500">
+                            리뷰를 작성하려면 로그인이 필요합니다.
+                        </div>
+                    )}
+
                     <div className="mt-12 border-t pt-8">
                         <ProductReviews reviews={reviews || []} />
                     </div>
