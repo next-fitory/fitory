@@ -1,7 +1,6 @@
 # 🛍️ Fitory - Next.js 기반 의류 쇼핑몰 플랫폼
 <img width="1694" height="653" alt="image" src="https://github.com/user-attachments/assets/545f04f1-194d-4339-bc5b-9340176e380f" />
-<hr>
-
+<br>
 
 ![Next.js](https://img.shields.io/badge/Next.js-16.2-black?logo=next.js)
 ![React](https://img.shields.io/badge/React-19.2-blue?logo=react)
