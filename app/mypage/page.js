@@ -8,7 +8,6 @@ import { useRequireAuth } from '@/hooks/useRequireAuth';
 export default function MyPage() {
   const user = useRequireAuth();
 
-
   return (
     <div className="min-h-screen bg-white text-black flex flex-col">
       <main className="flex-1">
