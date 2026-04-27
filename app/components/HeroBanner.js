@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import Link from 'next/link'
 
 export default function HeroBanner() {
   return (
@@ -18,12 +19,18 @@ export default function HeroBanner() {
         </h1>
         <p className="text-white/70 text-sm mb-8">지금 가장 트렌디한 스타일을 만나보세요</p>
         <div className="flex gap-3">
-          <button className="bg-white text-black text-sm font-bold px-6 py-3 hover:bg-gray-200 transition-colors">
+          <Link
+            href="#ranking-section"
+            className="bg-white text-black text-sm font-bold px-6 py-3 hover:bg-gray-200 transition-colors"
+          >
             쇼핑하기
-          </button>
-          <button className="border border-white text-white text-sm font-bold px-6 py-3 hover:bg-white/10 transition-colors">
+          </Link>
+          <Link
+            href="#brand-section"
+            className="border border-white text-white text-sm font-bold px-6 py-3 hover:bg-white/10 transition-colors"
+          >
             브랜드 보기
-          </button>
+          </Link>
         </div>
       </div>
     </section>
