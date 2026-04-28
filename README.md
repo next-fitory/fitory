@@ -313,7 +313,7 @@ FITORY/
 * **원인:** 기존 로그아웃 로직이 userStore의 세션만 초기화하고, cartStore 상태 초기화가 누락되어 `persist` 미들웨어에 의해 데이터가 유지되었습니다.
 * **해결:** useLogout 커스텀 훅을 생성하여 로그아웃 로직을 통합했습니다. 사용자 세션 종료와 동시에 장바구니를 초기화하도록 수정하여 데이터 동기화 문제를 해결했습니다.
 
-  <img width="586" height="124" alt="cart-after" src="https://github.com/user-attachments/assets/75fe1d49-cc94-4e32-bcef-78fc92fbc6ee" />
+  <img width="667" height="123" alt="cart-after" src="https://github.com/user-attachments/assets/a4efcb13-1beb-48df-be16-06fba3644218" />
   
 * **useLogout Hook:**
   ```JavaScript
