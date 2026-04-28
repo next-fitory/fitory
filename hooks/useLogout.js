@@ -1,12 +1,15 @@
-import { useUserStore } from '@/store/useUserStore'
-import { useRouter } from 'next/navigation'
+import { useCartStore } from "@/store/useCartStore";
+import { useUserStore } from "@/store/useUserStore";
+import { useRouter } from "next/navigation";
 
 export function useLogout() {
-  const logout = useUserStore(state => state.logout)
-  const router = useRouter()
+  const logout = useUserStore((state) => state.logout);
+  const clearCart = useCartStore((state) => state.clearCart);
+  const router = useRouter();
 
   return () => {
-    logout()
-    router.push('/')
-  }
+    clearCart();
+    logout();
+    router.push("/");
+  };
 }

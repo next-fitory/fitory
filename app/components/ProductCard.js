@@ -7,7 +7,7 @@ import { truncateText } from '@/lib/utils/format'
 export default function ProductCard({ product, rank }) {
   return (
     <div className="group cursor-pointer">
-      <div className="relative overflow-hidden bg-gray-100 aspect-[3/4] min-w-[240px] max-w-[240px]">
+      <div className="relative overflow-hidden bg-gray-100 aspect-[3/4] w-[160px] sm:w-[240px]">
         <Link href={`/products/${product.id}`}>
           <Image
             src={product.image_url}
