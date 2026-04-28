@@ -307,11 +307,11 @@ FITORY/
 ### 2. 로그아웃 시 장바구니 데이터 잔존 문제 해결
 
 * **문제:** 로그아웃 이후에도 localStorage에 장바구니(cart) 데이터가 남아 있어, 다른 사용자 또는 비로그인 상태에서 이전 사용자의 장바구니가 노출되는 문제가 발생했습니다.
-* 
+  
   <img width="667" height="124" alt="cart-before" src="https://github.com/user-attachments/assets/0d9b1e5c-71af-43ff-b08b-fb1b6e6e0d94" />
 
 * **원인:** 기존 로그아웃 로직이 userStore의 세션만 초기화하고, cartStore 상태 초기화가 누락되어 `persist` 미들웨어에 의해 데이터가 유지되었습니다.
-* **해결:** useLogout 커스텀 훅을 생성하여 로그아웃 로직을 통합했습니다.사용자 세션 종료와 동시에 장바구니를 초기화하도록 수정하여 데이터 동기화 문제를 해결했습니다.
+* **해결:** useLogout 커스텀 훅을 생성하여 로그아웃 로직을 통합했습니다. 사용자 세션 종료와 동시에 장바구니를 초기화하도록 수정하여 데이터 동기화 문제를 해결했습니다.
 
   <img width="586" height="124" alt="cart-after" src="https://github.com/user-attachments/assets/75fe1d49-cc94-4e32-bcef-78fc92fbc6ee" />
   
