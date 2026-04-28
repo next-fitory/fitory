@@ -304,10 +304,30 @@ FITORY/
 * **문제:** 조건부 `return`이 먼저 실행되면서 Hook 호출 순서가 변경되어 에러가 발생했습니다.
 * **해결:** 모든 Hook을 컴포넌트 최상단에서 호출하도록 구조를 수정하고, 조건부 렌더링을 이후로 이동시켜 실행 순서를 고정했습니다.
 
-### 2. 외부 이미지 렌더링 차단 문제
+### 2. 로그아웃 시 장바구니 데이터 잔존 문제 해결
 
-* **문제:** 외부 도메인(`image.msscdn.net`) 이미지 사용 시 Next.js `<Image>` 컴포넌트에서 보안 오류가 발생했습니다.
-* **해결:** `next.config.mjs`에 해당 도메인을 허용하도록 설정하여 정상적으로 이미지가 로드되도록 처리했습니다.
+* **문제:** 로그아웃 이후에도 localStorage에 장바구니(cart) 데이터가 남아 있어, 다른 사용자 또는 비로그인 상태에서 이전 사용자의 장바구니가 노출되는 문제가 발생했습니다.
+* 
+  <img width="667" height="124" alt="cart-before" src="https://github.com/user-attachments/assets/0d9b1e5c-71af-43ff-b08b-fb1b6e6e0d94" />
+
+* **원인:** 기존 로그아웃 로직이 userStore의 세션만 초기화하고, cartStore 상태 초기화가 누락되어 `persist` 미들웨어에 의해 데이터가 유지되었습니다.
+* **해결:** useLogout 커스텀 훅을 생성하여 로그아웃 로직을 통합했습니다.사용자 세션 종료와 동시에 장바구니를 초기화하도록 수정하여 데이터 동기화 문제를 해결했습니다.
+
+  <img width="586" height="124" alt="cart-after" src="https://github.com/user-attachments/assets/75fe1d49-cc94-4e32-bcef-78fc92fbc6ee" />
+  
+* **useLogout Hook:**
+  ```JavaScript
+  export function useLogout() {
+    const logout = useUserStore((state) => state.logout);
+    const clearCart = useCartStore((state) => state.clearCart);
+  
+    return () => {
+      clearCart();  // 남아있는 장바구니 데이터 초기화
+      logout();     // 유저 세션 초기화
+      // ... (이후 메인 페이지로 리다이렉트)
+    };
+  }
+  ```
 
 <br/>
 
